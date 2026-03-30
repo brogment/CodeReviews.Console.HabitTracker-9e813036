@@ -80,28 +80,53 @@ string ProcessKey(string regexExpression)
 
 void Insert()
 {
+    string dateFormat = @"\d{2}-\d{2}-\d{4}";
+
     Console.WriteLine("Enter title of book");
     string title = GetText();
 
     Console.WriteLine($"Enter date you started reading {title}");
-    string? date_started = GetDateInput();
+    string? date_started = GetDateInput(dateFormat);
     string? date_finished = null;
 
     Console.WriteLine($"Have you finished {title}");
     string? finishedBook = ProcessKey("[y|Y|n|N]").ToLower();
     if (finishedBook.Equals('y'))
     {
-        date_finished = GetDateInput(@"\d{2}-\d{2}-\d{4}");
+        date_finished = GetDateInput(dateFormat);
     }
+}
+
+string GetText(string? message = null)
+{
+    if (message is not null)
+    {
+        Console.WriteLine(message);
+    }
+
+    string? input = null;
+    while (true)
+    {
+        input = Console.ReadLine();
+        if (input.Equals("") {
+    }
+
 }
 
 string GetDateInput(string regexDateFormat)
 {
-    Console.WriteLine("Please enter date");
+    Console.WriteLine("Please enter date in MM-DD-YYYY format");
     string? input = Console.ReadLine();
     
     while (true)
     {
-            
+          // null check needed
+        if (Regex.IsMatch(input, regexDateFormat))
+        {
+            return input;
+        }   else
+        {
+            Console.WriteLine("Date entered in wrong format");
+        }
     }
 }
