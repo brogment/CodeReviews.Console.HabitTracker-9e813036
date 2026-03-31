@@ -99,7 +99,7 @@ void Insert()
 
 string GetText(string? message = null)
 {
-    if (message is not null)
+    if (!String.IsNullOrEmpty(message))
     {
         Console.WriteLine(message);
     }
@@ -108,7 +108,13 @@ string GetText(string? message = null)
     while (true)
     {
         input = Console.ReadLine();
-        if (input.Equals("") {
+        if (!String.IsNullOrEmpty(input)) 
+        {
+            return input;
+        } else
+        {
+            Console.WriteLine("Try entering again, NULL or empty values are not allowed.");
+        }
     }
 
 }
@@ -120,13 +126,17 @@ string GetDateInput(string regexDateFormat)
     
     while (true)
     {
-          // null check needed
-        if (Regex.IsMatch(input, regexDateFormat))
+        if (!String.IsNullOrEmpty(input))
         {
-            return input;
-        }   else
-        {
-            Console.WriteLine("Date entered in wrong format");
+            // null check needed
+            if (Regex.IsMatch(input, regexDateFormat))
+            {
+                return input;
+            }
+            else
+            {
+                Console.WriteLine("Date entered in wrong format");
+            }
         }
     }
 }
