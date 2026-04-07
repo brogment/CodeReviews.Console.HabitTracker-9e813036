@@ -82,11 +82,9 @@ void Insert()
 {
     string dateFormat = @"\d{2}-\d{2}-\d{4}";
 
-    Console.WriteLine("Enter title of book");
-    string title = GetText();
+    string title = GetText("Enter title of book. \nEnter 0 to return to main menu.");
 
-    Console.WriteLine($"Enter date you started reading {title}");
-    string? date_started = GetDateInput(dateFormat);
+    string? date_started = GetDateInput(dateFormat, $"Enter date you started reading {title}");
     string? date_finished = null;
 
     Console.WriteLine($"Have you finished {title}");
@@ -110,6 +108,8 @@ string GetText(string? message = null)
         input = Console.ReadLine();
         if (!String.IsNullOrEmpty(input)) 
         {
+            if (input == "0") MainMenu();
+
             return input;
         } else
         {
@@ -119,16 +119,22 @@ string GetText(string? message = null)
 
 }
 
-string GetDateInput(string regexDateFormat)
+string GetDateInput(string regexDateFormat, string? message = null)
 {
-    Console.WriteLine("Please enter date in MM-DD-YYYY format");
+    if (!String.IsNullOrEmpty(message))
+    {
+        Console.WriteLine(message);
+    }
+    Console.WriteLine("Please enter date in MM-DD-YYYY format.\nEnter 0 to return to main menu.");
     string? input = Console.ReadLine();
     
     while (true)
     {
         if (!String.IsNullOrEmpty(input))
         {
-            // null check needed
+
+            if (input == "0") MainMenu();
+
             if (Regex.IsMatch(input, regexDateFormat))
             {
                 return input;
